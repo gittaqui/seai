@@ -1,0 +1,33 @@
+name: WebApp Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: azseot3aictrs.azurecr.io  # Replace with your ACR name
+          username: azseot3aictrs
+          password: Ws0Q5Lmp1h78123KjOrn5/Ux71Ruvmc/nvV2erSvr0+ACRBuryxq
+
+      - name: Build and push Docker images
+        run: |
+          docker build . --file WebApp.Dockerfile --tag azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER
+          docker tag azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:latest
+          docker push azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER
+          docker push azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:latest
+
+          docker build . --file BatchProcess.Dockerfile --tag azseot3aictrs.azurecr.io/tamohammad/oai-batch:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER
+          docker tag azseot3aictrs.azurecr.io/tamohammad/oai-batch:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER azseot3aictrs.azurecr.io/tamohammad/oai-batch:latest
+          docker push azseot3aictrs.azurecr.io/tamohammad/oai-batch:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER
+          docker push azseot3aictrs.azurecr.io/tamohammad/oai-batch:latest

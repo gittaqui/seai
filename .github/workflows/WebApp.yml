@@ -17,8 +17,8 @@ jobs:
         uses: azure/docker-login@v1
         with:
           login-server: azseot3aictrs.azurecr.io  # Replace with your ACR name
-          username: 
-          password: 
+          username: azseot3aictrs
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and push Docker images
         run: |

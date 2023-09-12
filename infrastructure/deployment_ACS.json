@@ -146,7 +146,7 @@
     }
   },
   "variables": {
-    "WebAppImageName": "azseot3aictrs.azurecr.io/tamohammad/oai-embeddings",
+    "WebAppImageName": "azseot3aictrs.azurecr.io/tamohammad/oai-embeddings:latest",
     "BlobContainerName": "documents",
     "QueueName": "doc-processing",
     "ClientKey": "[concat(uniqueString(guid(resourceGroup().id, deployment().name)), parameters('newGuid'), 'Tg2%')]"
